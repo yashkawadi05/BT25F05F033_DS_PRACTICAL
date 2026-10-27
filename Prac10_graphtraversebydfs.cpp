@@ -1,39 +1,42 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void DFS(int node, vector<int> adj[], bool visited[]) {
-    visited[node] = true;
-    cout << node << " ";
+int graph[10][10], visited[10], n;
 
-    for (int i = 0; i < adj[node].size(); i++) {
-        int next = adj[node][i];
+void DFS(int v) {
+    cout << v << " ";
+    visited[v] = 1;
 
-        if (!visited[next]) {
-            DFS(next, adj, visited);
+    for (int i = 0; i < n; i++) {
+        if (graph[v][i] == 1 && visited[i] == 0) {
+            DFS(i);
         }
     }
 }
 
 int main() {
-    int n, e, u, v;
+    int edges, u, v;
 
-    cout << "Enter number of vertices and edges: ";
-    cin >> n >> e;
+    cout << "Enter number of vertices: ";
+    cin >> n;
 
-    vector<int> adj[n];
+    cout << "Enter number of edges: ";
+    cin >> edges;
 
-    cout << "Enter edges:\n";
-    for (int i = 0; i < e; i++) {
+    for (int i = 0; i < edges; i++) {
+        cout << "Enter edge (u v): ";
         cin >> u >> v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
+
+        graph[u][v] = 1;
+        graph[v][u] = 1;
     }
 
-    bool visited[n] = {false};
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
 
     cout << "DFS Traversal: ";
-    DFS(0, adj, visited);
+    DFS(0);
 
     return 0;
 }
